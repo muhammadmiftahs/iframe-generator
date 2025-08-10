@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Iframe Custom Domain</title>
+  <style>
+    /* Global reset dan box-sizing */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #3c3c3c; /* Latar gelap */
+      color: #ffffff;       /* Teks putih */
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 720px;
+      margin: 2rem auto;
+      background: #2a2a2a; /* Kontras dengan body */
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #e2e8f0;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border: 1px solid #4a5568;
+      border-radius: 4px;
+      background: #1f1f1f;
+      color: #e2e8f0;
+      font-size: 1rem;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #718096;
+    }
+    .help-text, .example {
+      font-size: 0.875rem;
+      color: #a0aec0;
+      margin-top: 0.25rem;
+    }
+    .example {
+      background: #1f1f1f;
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+    button {
+      background: #5a67d8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+    button:hover {
+      background: #434190;
+    }
+    .actions { margin-top: 1rem; }
+    .actions button { margin-right: 0.5rem; }
+    .output {
+      margin-top: 2rem;
+    }
+    .output textarea {
+      width: 100%;
+      height: 260px;
+      font-family: monospace;
+      white-space: pre;
+      background: #1a202c;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 4px;
+      border: 1px solid #4a5568;
+    }
+    /* Logo Pixinvite */
+    .logo {
+      display: block;
+      margin: 0 auto 1rem;
+      width: 60%;       /* Sekitar 50-60% dari container */
+      max-width: 200px; /* Batasi ukuran maksimal */
+      height: auto;
+      filter: brightness(0) invert(1); /* Pastikan logo putih terlihat */
+    }
+    /* Footer copyright */
+    .footer {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .footer p {
+      font-size: 0.875rem;
+      color: #a0aec0;
+    }
+    /* Responsif */
+    @media (max-width: 600px) {
+      .container { margin: 1rem; padding: 1rem; }
+      h1 { font-size: 1.5rem; }
+      .logo { width: 80%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo Pixinvite -->
+    <img src="https://pixinvite.com/wp-content/uploads/2023/07/Pixinvite-White-removebg-1-768x200.png" alt="Pixinvite Logo" class="logo">
+    <h1>📝 Generator Iframe Custom Domain</h1>
+    <p style="text-align:center; color:#cbd5e0;">Isi form untuk membuat <code>index.html</code> custom domain undangan.</p>
+
+    <form id="form">
+      <!-- Field Judul Undangan -->
+      <label for="title">Judul Undangan (og:title)</label>
+      <input type="text" id="title" required placeholder="Undangan Pernikahan Kami">
+      <div class="help-text">Contoh: "Undangan Pernikahan Rina & Dito"</div>
+
+      <!-- Field Deskripsi -->
+      <label for="description">Deskripsi Undangan (og:description)</label>
+      <textarea id="description" required placeholder="Klik untuk melihat detail undangan..."></textarea>
+      <div class="help-text">Maks 150 karakter.</div>
+
+      <!-- Field Gambar Preview -->
+      <label for="image">Link Featured Image (og:image)</label>
+      <input type="url" id="image" required placeholder="https://domain.com/assets/og-image.jpg">
+      <div class="help-text">Resolusi 1200×630px disarankan.</div>
+
+      <!-- Field URL Undangan Asli -->
+      <label for="inviteUrl">Link Undangan Asli</label>
+      <input type="url" id="inviteUrl" required placeholder="https://invite.domain.com/undangan123">
+      <div class="example">Contoh: <code>https://invite.pixinvite.com/abc123</code></div>
+
+      <!-- Field Custom Domain -->
+      <label for="customDomain">Custom Domain (og:url)</label>
+      <input type="url" id="customDomain" required placeholder="https://undangan.kami.com">
+      <div class="example">Contoh: <code>https://undangan.rinawedding.com</code></div>
+
+      <!-- Tombol Generate -->
+      <button type="submit">🎁 Generate Code</button>
+    </form>
+
+    <div class="output">
+      <h2>📋 Kode HTML</h2>
+      <!-- Area kode hasil generate -->
+      <textarea id="output" readonly placeholder="Kode akan muncul di sini..."></textarea>
+      <div class="actions">
+        <!-- Tombol salin kode -->
+        <button id="copyBtn">📋 Salin Kode</button>
+        <!-- Tombol download file -->
+        <button id="downloadBtn">⬇️ Download index.html</button>
+      </div>
+    </div>
+
+    <!-- Footer dengan copyright -->
+    <div class="footer">
+      <p>&copy; 2025 Pixinvite. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script>
+    // Ambil elemen form dan tombol
+    const form = document.getElementById('form');
+    const output = document.getElementById('output');
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Event listener untuk tombol Generate
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      // Ambil nilai input user
+      const title = document.getElementById('title').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const image = document.getElementById('image').value.trim();
+      const inviteUrl = document.getElementById('inviteUrl').value.trim();
+      const customDomain = document.getElementById('customDomain').value.trim();
+      // Enkripsi URL undangan asli dengan Base64
+      const encrypted = btoa(inviteUrl);
+
+      // Buat template HTML index
+      const template = `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Nonaktifkan SEO -->
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Open Graph Meta -->
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:image" content="${image}">
+  <meta property="og:url" content="${customDomain}">
+  <link rel="image_src" href="${image}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <style>
+    /* Pastikan iframe fullscreen */
+    html,body{margin:0;padding:0;height:100%;overflow:hidden;}
+    #invitation-frame{border:none;width:100%;height:100vh;}
+  </style>
+</head>
+<body>
+  <script>
+    (function(){
+      // Decode string Base64 menjadi URL undangan
+      var encrypted = '${encrypted}';
+      function decodeURL(str){ try{ return atob(str); } catch(e){ return ''; } }
+      var invitationURL = decodeURL(encrypted);
+      if(!invitationURL){ document.body.innerHTML = '<p>Undangan tidak tersedia.</p>'; return; }
+      // Tangkap query string dari custom domain
+      var query = window.location.search || '';
+      if(query){ invitationURL += (invitationURL.indexOf('?')===-1?'?':'&') + query.substring(1); }
+      // Buat elemen iframe
+      var iframe = document.createElement('iframe');
+      iframe.id = 'invitation-frame';
+      iframe.src = invitationURL;
+      iframe.setAttribute('loading','lazy');
+      iframe.setAttribute('allowfullscreen','');
+      iframe.setAttribute('sandbox','allow-scripts allow-same-origin');
+      // Tambahkan nofollow pada link di dalam iframe (jika same-origin)
+      iframe.addEventListener('load', function(){ try{ var links = iframe.contentDocument.getElementsByTagName('a'); for(var i=0;i<links.length;i++){ links[i].setAttribute('rel','nofollow noopener noreferrer'); } }catch(e){} });
+      document.body.appendChild(iframe);
+    })();
+  <\/script>
+</body>
+</html>`;
+      // Tampilkan hasil di textarea
+      output.value = template;
+    });
+
+    // Tombol salin kode
+    copyBtn.addEventListener('click', () => {
+      output.select(); document.execCommand('copy');
+      copyBtn.textContent = '✅ Disalin';
+      setTimeout(() => copyBtn.textContent = '📋 Salin Kode', 2000);
+    });
+
+    // Tombol unduh file index.html
+    downloadBtn.addEventListener('click', () => {
+      const blob = new Blob([output.value], { type: 'text/html' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'index.html';
+      link.click();
+    });
+  </script>
+</body>
+</html>
