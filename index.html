@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="https://pixinvite.com/wp-content/uploads/2025/01/20250127_223841-modified.png" type="image/png">
   <title>Generator Iframe Custom Domain</title>
   <style>
     /* Global reset dan box-sizing */
@@ -226,7 +225,13 @@
       iframe.src = invitationURL;
       iframe.setAttribute('loading','lazy');
       iframe.setAttribute('allowfullscreen','');
-      iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation');
+      iframe.setAttribute('sandbox','allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation');;
+      iframe.style.width = '100%';
+      iframe.style.height = '100vh';
+      iframe.style.border = '0';
+      iframe.style.position = 'relative';
+      iframe.style.zIndex = '9999';
+      iframe.style.pointerEvents = 'auto';
       // Tambahkan nofollow pada link di dalam iframe (jika same-origin)
       iframe.addEventListener('load', function(){ try{ var links = iframe.contentDocument.getElementsByTagName('a'); for(var i=0;i<links.length;i++){ links[i].setAttribute('rel','nofollow noopener noreferrer'); } }catch(e){} });
       document.body.appendChild(iframe);
