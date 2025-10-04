@@ -226,7 +226,7 @@
       iframe.src = invitationURL;
       iframe.setAttribute('loading','lazy');
       iframe.setAttribute('allowfullscreen','');
-      iframe.setAttribute('sandbox','allow-scripts allow-same-origin');
+      iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation');
       // Tambahkan nofollow pada link di dalam iframe (jika same-origin)
       iframe.addEventListener('load', function(){ try{ var links = iframe.contentDocument.getElementsByTagName('a'); for(var i=0;i<links.length;i++){ links[i].setAttribute('rel','nofollow noopener noreferrer'); } }catch(e){} });
       document.body.appendChild(iframe);
